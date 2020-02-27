@@ -18,7 +18,8 @@ class Game:
 
 
 def main():
-
+    i = 0
+    games = []
     games[i] = Game()
     # all games in specified folder
     dirs = os.listdir(sys.argv[1])
@@ -35,10 +36,10 @@ def main():
     # find result of game
     result = re.findall("Result .*", wholeFile)
     if len(result[0]) > 13:
-            games[i].winner = 0.5
-        else:
-            # 1 = white, 0 = black, 0.5 = draw
-            games[i].winner = result[0][8]
+        games[i].winner = 0.5
+    else:
+        # 1 = white, 0 = black, 0.5 = draw
+        games[i].winner = result[0][8]
 
         # go back to top of file
         file.seek(0)
