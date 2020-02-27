@@ -102,6 +102,8 @@ def main():
             games[i].totalBlack = games[i].startTime - \
                 lastMoveBlackSecond + len(moveTimes)/2*games[i].increment
 
+            games[i].totalTime = games[i].totalBlack + games[i].totalWhite
+
             print("game "+str((i+1)))
             print("white: "+games[i].player1)
             print("black: "+games[i].player2)
@@ -110,8 +112,8 @@ def main():
             print("result: "+str(games[i].winner))
             print("white time: "+str(games[i].totalWhite))
             print("black time: "+str(games[i].totalBlack))
-            games[i].totalTime = games[i].totalBlack + games[i].totalWhite
             print("total time: "+str(games[i].totalTime))
+            print()
 
 
 main()
