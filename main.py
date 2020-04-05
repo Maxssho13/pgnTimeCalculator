@@ -3,6 +3,7 @@ import sys
 import os
 import re
 from itertools import chain
+from datetime import datetime
 
 
 class Game:
@@ -21,6 +22,8 @@ def main():
     # all games in specified folder
     dirs = os.listdir(sys.argv[1])
     dirs.remove(".DS_Store")
+    if "report.txt" in dirs:
+        dirs.remove("report.txt")
     games = []
 
     # loop through each file
@@ -104,16 +107,20 @@ def main():
 
             games[i].totalTime = games[i].totalBlack + games[i].totalWhite
 
-            print("game "+str((i+1)))
-            print("white: "+games[i].player1)
-            print("black: "+games[i].player2)
-            print("start time: "+str(games[i].startTime))
-            print("increment: "+str(games[i].increment))
-            print("result: "+str(games[i].winner))
-            print("white time: "+str(games[i].totalWhite))
-            print("black time: "+str(games[i].totalBlack))
-            print("total time: "+str(games[i].totalTime))
-            print()
+            file.close()
+
+    generatePath = os.path.join(dirname, sys.argv[1])
+    outputFile = open(generatePath+"/report.txt", "a")
+    if len(dirs) == 1:
+        outputFile.write("This week I played "+str(i+1)+" game. \n")
+    else:
+        outputFile.write("This week I played "+str(i+1)+" games. \n")
+
+    for i in range(len(games)):
+        outputFile.write("Game "+str(i+1)+": " +
+                         str(round(games[i].totalTime/60, 1))+" minutes\n")
+
+    outputFile.close()
 
 
 main()
