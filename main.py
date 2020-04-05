@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 class Game:
-    def __init__(self, player1="", player2="", winner=0, startTime=0, increment=0, totalWhite=0, totalTime=0, totalBlack=0):
+    def __init__(self, player1="", player2="", winner=0, startTime=0, increment=0, totalWhite=0, totalTime=0, totalBlack=0, opponent=""):
         self.white = player1
         self.black = player2
         self.winner = winner
@@ -16,6 +16,10 @@ class Game:
         self.totalWhite = totalWhite
         self.totalBlack = totalBlack
         self.totalTime = totalTime
+        self.opponent = opponent
+
+
+opponent = ""
 
 
 def main():
@@ -69,9 +73,11 @@ def main():
             if "Maxssho13" in fileLines[4]:
                 white = "Maxssho13"
                 black = fileLines[5][8:len(fileLines[5])-3]
+                games[i].opponent = black
             else:
                 white = fileLines[4][8:len(fileLines[4])-3]
                 black = "Maxssho13"
+                games[i].opponent = white
 
             games[i].player1 = white
             games[i].player2 = black
@@ -116,10 +122,13 @@ def main():
     else:
         outputFile.write("This week I played "+str(i+1)+" games. \n")
 
+    timeForWeek = 0
     for i in range(len(games)):
+        timeForWeek += games[i].totalTime
         outputFile.write("Game "+str(i+1)+": " +
-                         str(round(games[i].totalTime/60, 1))+" minutes\n")
+                         str(round(games[i].totalTime/60, 1))+" minutes - "+games[i].opponent+"\n")
 
+    outputFile.write("total time: "+str(round(timeForWeek/60, 1))+" minutes\n")
     outputFile.close()
 
 
